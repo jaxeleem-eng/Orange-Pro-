@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Chic, Dark Designer Theme */
+    --background: 0 0% 5%; /* Almost black #0d0d0d */
+    --foreground: 0 0% 95%; /* Soft white #f2f2f2 */
+    
+    --card: 0 0% 8%; /* Slightly lighter black */
+    --card-foreground: 0 0% 95%;
+    
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 95%;
+    
+    /* Sophisticated Orange Accent */
+    --primary: 25 100% 50%; /* Pure Orange */
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 100%;
+    
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+    
+    --accent: 25 100% 50%;
+    --accent-foreground: 0 0% 5%;
+    
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 25 100% 50%;
+    
+    --radius: 0rem; /* Sharp corners for chic look */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+  }
+  
+  /* Elegant Typography Selection */
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight font-light;
+  }
+}
