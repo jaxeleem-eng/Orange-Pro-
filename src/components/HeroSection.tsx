@@ -51,7 +51,7 @@ export function HeroSection() {
         >
           <motion.p
             variants={item}
-            className="text-lg text-primary font-light leading-relaxed border-l border-white/10 pl-6"
+            className="text-xl text-primary font-bold leading-relaxed border-l-2 border-primary/50 pl-6"
           >
             We architect the invisible infrastructure of tomorrow's businesses. 
             Seamless AI integration, process automation, and systemic efficiency upgrades.
