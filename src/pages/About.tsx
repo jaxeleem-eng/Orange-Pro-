@@ -18,13 +18,13 @@ export default function About() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-start">
         <div className="space-y-12">
           <div className="space-y-6">
-            <h3 className="text-3xl font-light text-white">Our Mission</h3>
-            <p className="text-gray-400 font-light leading-relaxed">
+            <h3 className="text-3xl font-bold text-white">Our Mission</h3>
+            <p className="text-[#AAAAAA] leading-relaxed">
               At OrangePro, we believe that efficiency is the ultimate competitive advantage. 
               Our mission is to democratize access to advanced AI tools, allowing businesses of all sizes 
               to operate with the speed and precision of tech giants.
             </p>
-            <p className="text-gray-400 font-light leading-relaxed">
+            <p className="text-[#AAAAAA] leading-relaxed">
               We don't just build software; we build intelligence into the very fabric of your operations. 
               From automating mundane tasks to predicting market trends, our solutions are designed to 
               free your human talent to focus on creativity and strategy.
@@ -32,16 +32,16 @@ export default function About() {
           </div>
 
           <div className="space-y-8">
-            <h3 className="text-3xl font-light text-white">Core Values</h3>
+            <h3 className="text-3xl font-bold text-white">Core Values</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {values.map((value, idx) => (
                 <motion.div 
                   key={idx}
                   whileHover={{ x: 10 }}
-                  className="border-l border-white/10 pl-6 py-2 hover:border-primary transition-colors duration-300"
+                  className="border-l border-[#222222] pl-6 py-2 hover:border-primary transition-colors duration-300"
                 >
-                  <h4 className="text-xl text-white mb-2">{value.title}</h4>
-                  <p className="text-sm text-gray-500">{value.desc}</p>
+                  <h4 className="text-xl font-bold text-white mb-2">{value.title}</h4>
+                  <p className="text-sm text-[#888888]">{value.desc}</p>
                 </motion.div>
               ))}
             </div>
@@ -50,8 +50,8 @@ export default function About() {
 
         <div className="relative">
           <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 to-transparent rounded-lg blur-2xl opacity-50" />
-          <div className="relative border border-white/10 bg-black/40 backdrop-blur-md p-8 md:p-12 space-y-8">
-            <h3 className="text-2xl font-light text-white mb-8">Why Choose Us?</h3>
+          <div className="relative border border-[#222222] bg-[#141414] p-8 md:p-12 rounded-lg space-y-8">
+            <h3 className="text-2xl font-bold text-white mb-8">Why Choose Us?</h3>
             
             {[
               "Proprietary AI Models trained on industry-specific data",
@@ -60,26 +60,26 @@ export default function About() {
               "Dedicated Support Team of AI Specialists"
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-4 group">
-                <div className="mt-1 w-5 h-5 rounded-full border border-white/20 flex items-center justify-center group-hover:border-primary group-hover:bg-primary/10 transition-colors">
+                <div className="mt-1 w-5 h-5 rounded-full border border-[#222222] flex items-center justify-center group-hover:border-primary group-hover:bg-primary/10 transition-colors">
                   <Check className="w-3 h-3 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
-                <p className="text-gray-300 font-light group-hover:text-white transition-colors">{item}</p>
+                <p className="text-[#AAAAAA] group-hover:text-white transition-colors">{item}</p>
               </div>
             ))}
 
-            <div className="pt-8 mt-8 border-t border-white/10">
+            <div className="pt-8 mt-8 border-t border-[#222222]">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-4xl font-light text-white">98%</p>
-                  <p className="text-xs text-gray-500 uppercase tracking-widest mt-1">Client Retention</p>
+                  <p className="text-4xl font-bold text-white">98%</p>
+                  <p className="text-xs text-[#888888] uppercase tracking-widest mt-1">Client Retention</p>
                 </div>
                 <div>
-                  <p className="text-4xl font-light text-white">10x</p>
-                  <p className="text-xs text-gray-500 uppercase tracking-widest mt-1">ROI Average</p>
+                  <p className="text-4xl font-bold text-white">10x</p>
+                  <p className="text-xs text-[#888888] uppercase tracking-widest mt-1">ROI Average</p>
                 </div>
                 <div>
-                  <p className="text-4xl font-light text-white">50+</p>
-                  <p className="text-xs text-gray-500 uppercase tracking-widest mt-1">Enterprise Partners</p>
+                  <p className="text-4xl font-bold text-white">50+</p>
+                  <p className="text-xs text-[#888888] uppercase tracking-widest mt-1">Enterprise Partners</p>
                 </div>
               </div>
             </div>

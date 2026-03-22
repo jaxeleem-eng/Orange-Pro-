@@ -1,6 +1,5 @@
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import { MouseEvent } from "react";
-import { ArrowUpRight } from "lucide-react";
 
 interface CategoryCardProps {
   icon: React.ReactNode;
@@ -9,7 +8,7 @@ interface CategoryCardProps {
   delay?: number;
 }
 
-export function CategoryCard({ icon, title, description, delay = 0 }: CategoryCardProps) {
+export function CategoryCard({ icon, title, description }: CategoryCardProps) {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -20,48 +19,40 @@ export function CategoryCard({ icon, title, description, delay = 0 }: CategoryCa
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] }}
-      viewport={{ once: true, margin: "-100px" }}
-      className="group relative h-full flex flex-col justify-between border-l border-white/10 bg-black/40 backdrop-blur-sm p-8 hover:bg-black/60 transition-colors duration-500"
+    <div
+      className="group relative h-full flex flex-col justify-between border border-[#222222] bg-[#141414] p-8 rounded-lg hover:-translate-y-2 hover:bg-[#1A1A1A] transition-all duration-500 ease-in-out"
       onMouseMove={handleMouseMove}
     >
-      {/* Subtle spotlight that only appears on hover */}
+      {/* Orange glow spotlight on hover */}
       <motion.div
-        className="pointer-events-none absolute -inset-px opacity-0 transition duration-500 group-hover:opacity-100"
+        className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover:opacity-100 rounded-lg"
         style={{
           background: useMotionTemplate`
             radial-gradient(
-              400px circle at ${mouseX}px ${mouseY}px,
-              rgba(255, 107, 0, 0.08),
+              300px circle at ${mouseX}px ${mouseY}px,
+              rgba(255, 107, 0, 0.1),
               transparent 80%
             )
           `,
         }}
       />
+
+      {/* Subtle bottom border glow effect */}
+      <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       
       <div className="relative z-10 space-y-6">
-        <div className="flex justify-between items-start">
-           <div className="text-gray-500 group-hover:text-primary transition-colors duration-300">
-             {icon}
-           </div>
-           <ArrowUpRight className="w-5 h-5 text-gray-700 group-hover:text-white transition-colors duration-300 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+        <div className="text-primary">
+          {icon}
         </div>
         
-        <h3 className="text-2xl font-light tracking-tight text-white group-hover:translate-x-1 transition-transform duration-300">
+        <h3 className="text-xl font-bold tracking-tight text-white">
           {title}
         </h3>
         
-        <p className="text-gray-500 text-sm leading-relaxed font-light group-hover:text-gray-400 transition-colors duration-300">
+        <p className="text-[#888888] text-base leading-relaxed">
           {description}
         </p>
       </div>
-
-      <div className="relative z-10 mt-8">
-        <div className="h-[1px] w-0 bg-primary/50 group-hover:w-full transition-all duration-700 ease-out" />
-      </div>
-    </motion.div>
+    </div>
   );
 }

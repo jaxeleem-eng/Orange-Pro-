@@ -50,8 +50,8 @@ export default function Work() {
             transition={{ delay: idx * 0.2 }}
             className="group cursor-pointer"
           >
-            <div className="relative overflow-hidden aspect-[4/3] mb-6">
-              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10" />
+            <div className="relative overflow-hidden aspect-[4/3] mb-6 rounded-lg border border-[#222222]">
+              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-colors z-10" />
               <img 
                 src={project.image} 
                 alt={project.title} 
@@ -61,14 +61,14 @@ export default function Work() {
             
             <div className="flex justify-between items-start mb-2">
               <div>
-                <p className="text-primary text-xs uppercase tracking-widest mb-2">{project.category}</p>
-                <h3 className="text-3xl font-light text-white mb-1 group-hover:text-primary transition-colors">{project.title}</h3>
-                <p className="text-sm text-gray-500">{project.client}</p>
+                <p className="text-primary text-xs uppercase tracking-widest mb-2 font-bold">{project.category}</p>
+                <h3 className="text-3xl font-bold text-white mb-1 group-hover:text-primary transition-colors">{project.title}</h3>
+                <p className="text-sm text-[#888888]">{project.client}</p>
               </div>
-              <ArrowUpRight className="w-6 h-6 text-gray-600 group-hover:text-white transition-colors transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+              <ArrowUpRight className="w-6 h-6 text-[#888888] group-hover:text-white transition-colors transform group-hover:translate-x-1 group-hover:-translate-y-1" />
             </div>
             
-            <p className="text-gray-400 font-light mt-4 leading-relaxed max-w-md">
+            <p className="text-[#AAAAAA] mt-4 leading-relaxed max-w-md">
               {project.description}
             </p>
           </motion.div>
@@ -76,12 +76,12 @@ export default function Work() {
       </div>
       
       <div className="mt-24 text-center">
-        <h3 className="text-2xl font-light text-white mb-6">Ready to upgrade your business?</h3>
+        <h2 className="text-4xl font-bold text-white mb-8">Ready to Build a Smarter Business?</h2>
         <Link 
           to="/contact" 
-          className="inline-block border border-white/20 px-8 py-4 text-sm uppercase tracking-widest hover:bg-primary hover:text-black hover:border-primary transition-all duration-300"
+          className="bg-primary text-white px-10 py-5 rounded-lg font-bold hover:bg-primary/90 transition-all text-xl inline-block"
         >
-          Start a Project
+          Book a Free Audit
         </Link>
       </div>
     </PageLayout>

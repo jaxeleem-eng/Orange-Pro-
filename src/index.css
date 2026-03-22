@@ -4,37 +4,37 @@
 
 @layer base {
   :root {
-    /* Chic, Dark Designer Theme */
-    --background: 0 0% 5%; /* Almost black #0d0d0d */
-    --foreground: 0 0% 95%; /* Soft white #f2f2f2 */
+    /* OrangePro - Dark, Premium, Minimal Theme */
+    --background: 0 0% 4%; /* #0A0A0A */
+    --foreground: 0 0% 100%; /* #FFFFFF */
     
-    --card: 0 0% 8%; /* Slightly lighter black */
-    --card-foreground: 0 0% 95%;
+    --card: 0 0% 8%; /* #141414 */
+    --card-foreground: 0 0% 100%;
     
-    --popover: 0 0% 8%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 0 0% 7%; /* #111111 */
+    --popover-foreground: 0 0% 100%;
     
-    /* Sophisticated Orange Accent */
-    --primary: 25 100% 50%; /* Pure Orange */
+    /* Brand Orange Accent */
+    --primary: 25 100% 50%; /* #FF6B00 */
     --primary-foreground: 0 0% 100%;
     
-    --secondary: 0 0% 12%;
+    --secondary: 0 0% 53%; /* #888888 */
     --secondary-foreground: 0 0% 100%;
     
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 0 0% 67%; /* #AAAAAA */
+    --muted-foreground: 0 0% 53%; /* #888888 */
     
     --accent: 25 100% 50%;
-    --accent-foreground: 0 0% 5%;
+    --accent-foreground: 0 0% 100%;
     
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
+    --border: 0 0% 13%; /* #222222 */
+    --input: 0 0% 13%;
     --ring: 25 100% 50%;
     
-    --radius: 0rem; /* Sharp corners for chic look */
+    --radius: 0.5rem; /* 8px rounded corners */
   }
 }
 
@@ -44,11 +44,23 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
-    font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+    font-family: 'Inter', sans-serif;
+    color: #AAAAAA; /* Body text color */
+    line-height: 1.7;
   }
   
-  /* Elegant Typography Selection */
   h1, h2, h3, h4, h5, h6 {
-    @apply tracking-tight font-light;
+    @apply tracking-tight font-bold text-white;
+  }
+
+  h1 {
+    font-size: 72px;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  h2 {
+    font-size: 42px;
+    line-height: 1.2;
   }
 }

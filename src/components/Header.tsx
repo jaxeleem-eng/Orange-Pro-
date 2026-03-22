@@ -5,9 +5,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../lib/utils";
 
 const navigation = [
-  { name: "Work", href: "/work" },
-  { name: "Services", href: "/services" },
+  { name: "Services", href: "#services" },
+  { name: "How It Works", href: "#how-it-works" },
+  { name: "Industries", href: "#industries" },
   { name: "About", href: "/about" },
+  { name: "Contact", href: "/contact" },
 ];
 
 export function Header() {
@@ -17,7 +19,7 @@ export function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 20);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -26,43 +28,57 @@ export function Header() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out",
-        scrolled ? "bg-background/80 backdrop-blur-md py-4" : "bg-transparent py-8"
+        "fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ease-in-out border-b",
+        scrolled 
+          ? "bg-[#0A0A0A]/70 backdrop-blur-xl py-3 border-border/50" 
+          : "bg-[#0A0A0A]/40 backdrop-blur-md py-6 border-transparent"
       )}
     >
-      <div className="container mx-auto px-6 flex items-center justify-between">
-        <Link to="/" className="text-xl font-light tracking-widest text-white uppercase hover:opacity-80 transition-opacity">
-          Orange<span className="font-bold text-primary">Pro</span>
-        </Link>
+      <div className="container mx-auto px-5 md:px-6 flex items-center">
+        <div className="flex-1 flex items-center">
+          <Link 
+            to="/" 
+            className={cn(
+              "font-bold tracking-tight text-white hover:opacity-90 transition-all duration-300",
+              scrolled ? "text-xl" : "text-2xl"
+            )}
+          >
+            Orange<span className="text-primary">Pro</span>
+          </Link>
+        </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-12">
+        <nav className="hidden md:flex flex-1 items-center justify-center gap-10">
           {navigation.map((item) => (
-            <Link
+            <a
               key={item.name}
-              to={item.href}
+              href={item.href}
               className={cn(
-                "text-xs font-medium uppercase tracking-[0.2em] transition-all duration-300 hover:text-white",
-                location.pathname === item.href ? "text-white" : "text-primary"
+                "font-medium transition-all duration-300 hover:text-white",
+                scrolled ? "text-xs" : "text-sm",
+                location.pathname === item.href ? "text-white" : "text-secondary"
               )}
             >
               {item.name}
-            </Link>
+            </a>
           ))}
         </nav>
 
-        <div className="hidden md:block">
-            <Link
+        <div className="hidden md:flex flex-1 justify-end">
+          <Link
             to="/contact"
-            className="text-xs font-bold uppercase tracking-[0.2em] text-white hover:text-primary transition-colors border border-white/10 px-6 py-3 hover:bg-white/5"
-            >
-            Contact
-            </Link>
+            className={cn(
+              "bg-primary text-white rounded-lg font-bold hover:bg-primary/90 transition-all duration-300 inline-block",
+              scrolled ? "px-5 py-2 text-xs" : "px-6 py-2.5 text-sm"
+            )}
+          >
+            Book a Free Audit
+          </Link>
         </div>
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-white"
+          className="md:hidden text-white ml-auto"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -73,28 +89,28 @@ export function Header() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "100vh" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden fixed inset-0 bg-background z-40 flex items-center justify-center"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="md:hidden fixed inset-0 bg-[#0A0A0A] z-[90] flex items-center justify-center pt-20"
           >
-            <nav className="flex flex-col items-center gap-8">
+            <nav className="flex flex-col items-center gap-8 px-6 w-full max-w-sm">
               {navigation.map((item) => (
-                <Link
+                <a
                   key={item.name}
-                  to={item.href}
-                  className="text-3xl font-light text-white"
+                  href={item.href}
+                  className="text-2xl font-bold text-white hover:text-primary transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
                   {item.name}
-                </Link>
+                </a>
               ))}
               <Link
                 to="/contact"
-                className="text-3xl font-bold text-primary mt-4"
+                className="bg-primary text-white w-full py-4 rounded-lg text-center text-lg font-bold mt-4 hover:bg-primary/90 transition-colors"
                 onClick={() => setIsOpen(false)}
               >
-                Contact
+                Book a Free Audit
               </Link>
             </nav>
           </motion.div>
