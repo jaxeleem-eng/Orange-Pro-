@@ -51,7 +51,7 @@ export function HeroSection() {
 
           <motion.div variants={item} className="flex flex-col sm:flex-row gap-4 pt-4">
             <Link
-              to="/contact"
+              to="/#contact"
               className="bg-primary text-white px-8 py-4 rounded-lg font-bold hover:bg-primary/90 transition-all text-lg w-full sm:w-auto text-center"
             >
               Book a Free Audit

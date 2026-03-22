@@ -8,6 +8,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>OrangePro | AI Integration Consultancy</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script defer>
+      window.addEventListener("DOMContentLoaded", function () {
+        if (window.emailjs && window.emailjs.init) {
+          window.emailjs.init("9BDLy2V6k-4ikvSBU");
+        }
+      });
+    </script>
     <script type="module">
       if (import.meta.hot?.on) {
         import.meta.hot.on('vite:error', (error) => {

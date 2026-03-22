@@ -4,10 +4,13 @@ import { HeroSection } from "../components/HeroSection";
 import { CategoryCard } from "../components/CategoryCard";
 import { Settings, Database, Code, Zap, Users, Shield } from "lucide-react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
 import { Footer } from "../components/Footer";
 
 export default function Home() {
+  const location = useLocation();
+
   const fadeInUp = {
     hidden: { opacity: 0, y: 30 },
     visible: { 
@@ -106,6 +109,90 @@ export default function Home() {
       title: "Head of Operations, Nova Logistics",
     },
   ];
+
+  const businessOptions = useMemo(
+    () => ["Small Business", "Medium Business", "Large Business", "Enterprise"],
+    []
+  );
+
+  const [form, setForm] = useState({
+    fullName: "",
+    companyName: "",
+    email: "",
+    phone: "",
+    businessType: "",
+    message: "",
+  });
+
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [statusMessage, setStatusMessage] = useState<string>("");
+
+  useEffect(() => {
+    if (!location.hash) return;
+    const id = location.hash.replace("#", "");
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [location.hash]);
+
+  function validate() {
+    const nextErrors: Record<string, string> = {};
+    if (!form.fullName.trim()) nextErrors.fullName = "Full Name is required.";
+    if (!form.companyName.trim()) nextErrors.companyName = "Company Name is required.";
+    if (!form.email.trim()) nextErrors.email = "Email Address is required.";
+    if (form.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
+      nextErrors.email = "Please enter a valid email address.";
+    }
+    if (!form.businessType) nextErrors.businessType = "Please select an option.";
+    if (!form.message.trim()) nextErrors.message = "Message is required.";
+    return nextErrors;
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setStatus("idle");
+    setStatusMessage("");
+
+    const nextErrors = validate();
+    setFormErrors(nextErrors);
+    if (Object.keys(nextErrors).length > 0) return;
+
+    setStatus("submitting");
+
+    try {
+      const emailjs = (window as unknown as { emailjs?: { send?: (serviceId: string, templateId: string, params: Record<string, unknown>) => Promise<unknown> } }).emailjs;
+      if (!emailjs?.send) {
+        setStatus("error");
+        setStatusMessage("Something went wrong. Please email us directly at info@orangepro.co.uk");
+        return;
+      }
+
+      await emailjs.send("service_l2uyrix", "template_enbua0m", {
+        from_name: form.fullName,
+        company: form.companyName,
+        from_email: form.email,
+        phone: form.phone || "N/A",
+        business_type: form.businessType,
+        message: form.message,
+      });
+
+      setStatus("success");
+      setStatusMessage("Thank you! We'll be in touch within 24 hours.");
+      setForm({
+        fullName: "",
+        companyName: "",
+        email: "",
+        phone: "",
+        businessType: "",
+        message: "",
+      });
+      setFormErrors({});
+    } catch {
+      setStatus("error");
+      setStatusMessage("Something went wrong. Please email us directly at info@orangepro.co.uk");
+    }
+  }
 
   return (
     <div className="min-h-screen bg-[#0A0A0A] text-white overflow-x-hidden relative">
@@ -316,12 +403,133 @@ export default function Home() {
                 Join the forward-thinking companies already using OrangePro to lead their industry.
               </p>
               <Link
-                to="/contact"
+                to="/#contact"
                 className="bg-primary text-white px-10 py-5 rounded-lg font-bold hover:bg-primary/90 transition-all text-xl inline-block"
               >
                 Book a Free Audit
               </Link>
             </motion.div>
+          </div>
+        </section>
+
+        <section id="contact" className="py-20 md:py-32 px-5 md:px-6 scroll-mt-28">
+          <div className="container mx-auto max-w-[1200px]">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeInUp}
+              className="mb-14"
+            >
+              <h2 className="text-[42px] font-bold text-white">Contact</h2>
+              <div className="mt-4 h-px w-16 bg-primary" />
+              <p className="text-[#888888] max-w-2xl text-lg mt-6">
+                Book your free audit and we’ll reply within 24 hours.
+              </p>
+            </motion.div>
+
+            <div className="border border-[#222222] bg-[#141414] rounded-lg p-8 md:p-10">
+              <form onSubmit={handleSubmit} className="space-y-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-bold text-white mb-2">Full Name</label>
+                    <input
+                      value={form.fullName}
+                      onChange={(e) => setForm((p) => ({ ...p, fullName: e.target.value }))}
+                      className="w-full bg-[#0F0F0F] border border-[#222222] rounded-lg px-4 py-3 text-white placeholder:text-[#666666] focus:outline-none focus:border-primary"
+                      placeholder="Your name"
+                      required
+                    />
+                    {formErrors.fullName && <div className="text-red-400 text-sm mt-2">{formErrors.fullName}</div>}
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-bold text-white mb-2">Company Name</label>
+                    <input
+                      value={form.companyName}
+                      onChange={(e) => setForm((p) => ({ ...p, companyName: e.target.value }))}
+                      className="w-full bg-[#0F0F0F] border border-[#222222] rounded-lg px-4 py-3 text-white placeholder:text-[#666666] focus:outline-none focus:border-primary"
+                      placeholder="Your company"
+                      required
+                    />
+                    {formErrors.companyName && <div className="text-red-400 text-sm mt-2">{formErrors.companyName}</div>}
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-bold text-white mb-2">Email Address</label>
+                    <input
+                      type="email"
+                      value={form.email}
+                      onChange={(e) => setForm((p) => ({ ...p, email: e.target.value }))}
+                      className="w-full bg-[#0F0F0F] border border-[#222222] rounded-lg px-4 py-3 text-white placeholder:text-[#666666] focus:outline-none focus:border-primary"
+                      placeholder="you@company.co.uk"
+                      required
+                    />
+                    {formErrors.email && <div className="text-red-400 text-sm mt-2">{formErrors.email}</div>}
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-bold text-white mb-2">Phone Number (optional)</label>
+                    <input
+                      value={form.phone}
+                      onChange={(e) => setForm((p) => ({ ...p, phone: e.target.value }))}
+                      className="w-full bg-[#0F0F0F] border border-[#222222] rounded-lg px-4 py-3 text-white placeholder:text-[#666666] focus:outline-none focus:border-primary"
+                      placeholder="+44 7..."
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-bold text-white mb-2">What best describes your business?</label>
+                    <select
+                      value={form.businessType}
+                      onChange={(e) => setForm((p) => ({ ...p, businessType: e.target.value }))}
+                      className="w-full bg-[#0F0F0F] border border-[#222222] rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary"
+                      required
+                    >
+                      <option value="" disabled>
+                        Select one
+                      </option>
+                      {businessOptions.map((opt) => (
+                        <option key={opt} value={opt}>
+                          {opt}
+                        </option>
+                      ))}
+                    </select>
+                    {formErrors.businessType && <div className="text-red-400 text-sm mt-2">{formErrors.businessType}</div>}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-bold text-white mb-2">Tell us about your business and what you'd like help with</label>
+                  <textarea
+                    value={form.message}
+                    onChange={(e) => setForm((p) => ({ ...p, message: e.target.value }))}
+                    className="w-full bg-[#0F0F0F] border border-[#222222] rounded-lg px-4 py-3 text-white placeholder:text-[#666666] focus:outline-none focus:border-primary min-h-[140px]"
+                    placeholder="What are you trying to automate or improve?"
+                    required
+                  />
+                  {formErrors.message && <div className="text-red-400 text-sm mt-2">{formErrors.message}</div>}
+                </div>
+
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                  <button
+                    type="submit"
+                    disabled={status === "submitting"}
+                    className="bg-primary text-white px-8 py-4 rounded-lg font-bold hover:bg-primary/90 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+                  >
+                    {status === "submitting" ? "Sending..." : "Book My Free Audit"}
+                  </button>
+
+                  {statusMessage && (
+                    <div className={status === "success" ? "text-green-500 font-bold" : status === "error" ? "text-red-400 font-bold" : "text-[#AAAAAA]"}>
+                      {statusMessage}
+                    </div>
+                  )}
+                </div>
+              </form>
+            </div>
           </div>
         </section>
       </main>
