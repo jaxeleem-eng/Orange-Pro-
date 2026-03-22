@@ -25,6 +25,31 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const closeMenu = () => setIsOpen(false);
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeMenu();
+    };
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    window.addEventListener("scroll", closeMenu, { passive: true });
+    window.addEventListener("wheel", closeMenu, { passive: true });
+    window.addEventListener("touchmove", closeMenu, { passive: true });
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("scroll", closeMenu);
+      window.removeEventListener("wheel", closeMenu);
+      window.removeEventListener("touchmove", closeMenu);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen]);
+
   return (
     <header
       className={cn(
@@ -118,8 +143,12 @@ export function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             className="md:hidden fixed inset-0 bg-[#0A0A0A] z-[110] flex items-center justify-center pt-20"
+            onClick={() => setIsOpen(false)}
           >
-            <nav className="flex flex-col items-center gap-8 px-6 w-full max-w-sm">
+            <nav
+              className="flex flex-col items-center gap-8 px-6 w-full max-w-sm"
+              onClick={(e) => e.stopPropagation()}
+            >
               {navigation.map((item) => (
                 <a
                   key={item.name}
